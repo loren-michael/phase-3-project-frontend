@@ -1,10 +1,9 @@
 import '../App.css';
-import '../index.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import NavBar from './NavBar';
 // import Search from './Search';
-// import Login from './Login';
+import Login from './Login';
 import Home from './Home'
 import CharacterForm from './CharacterForm';
 import CharacterContainer from './CharacterContainer';
@@ -25,11 +24,11 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Routes>
         <Route path={"/user/:id"} element={ <CharacterContainer /> } />
         <Route path="/character_form" element={ <CharacterForm /> } />
-        <Route exact path="/" element={ <Home /> }/>
+        <Route exact path="/" element={ loggedIn ? <Home user={user} /> : <Login setUser={setUser} /> }/>
       </Routes>
     </div>
   );
