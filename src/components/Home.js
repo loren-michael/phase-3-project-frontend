@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Home() {
+function Home({ gameInfo }) {
     return (
         <div>Hello from Home Component</div>
     )
