@@ -8,12 +8,11 @@ import CharacterContainer from './CharacterContainer';
 
 
 function App() {
-  const [gameInfo, setGameInfo] = useState([])
+  const [category, setCategory] = useState("Games");
 
   useEffect(() => {
     fetch(`http://localhost:9292/games/`)
     .then(r => r.json())
-    .then(r => setGameInfo(r))
   }, [])
 
 
@@ -23,9 +22,9 @@ function App() {
     <div>
       <NavBar />
       <Routes>
-        <Route path={"/user/:id"} element={ <CharacterContainer gameInfo={gameInfo} /> } />
+        <Route path={"/user/:id"} element={ <CharacterContainer /> } />
         <Route path="/character_form" element={ <CharacterForm /> } />
-        <Route exact path="/" element={ <Home gameInfo={gameInfo} /> }/>
+        <Route exact path="/" element={ <Home category={category} setCategory={setCategory} /> }/>
       </Routes>
     </div>
   );
