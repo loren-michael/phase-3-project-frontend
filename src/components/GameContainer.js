@@ -1,8 +1,16 @@
 import React from 'react';
+import GameCard from './GameCard';
 
 function GameContainer({ display }) {
     return (
-        <div>Game Container</div>
+        <div>
+            {display.map(game => {
+                return (
+                    <GameCard game={game} />
+                )
+            })}
+
+        </div>
     )
 };
 

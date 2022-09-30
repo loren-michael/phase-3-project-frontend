@@ -4,7 +4,7 @@ function CharacterCard({ character }) {
     return (
         <div>Character Card
             <div class="char-card">
-                <h3>{character.name}</h3>
+                <h4>{character.name}</h4>
             </div>
         </div>
     )

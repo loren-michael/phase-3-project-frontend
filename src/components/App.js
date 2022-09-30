@@ -16,7 +16,7 @@ function App() {
   // }
 
   useEffect(() => {
-    fetch(`http://localhost:9292/games/`)
+    fetch(`http://localhost:9292/games`)
       .then(r => r.json())
       .then(games => setDisplay(games))
   }, [])
@@ -24,12 +24,12 @@ function App() {
 
   useEffect(() => {
     if (category === "Games") {
-      fetch(`http://localhost:9292/games/`)
+      fetch(`http://localhost:9292/games`)
       .then(r => r.json())
       .then(games => setDisplay(games))
     }
     else if (category === "Characters") {
-      fetch(`http://localhost:9292/characters/`)
+      fetch(`http://localhost:9292/characters`)
       .then(r => r.json())
       .then(characters => setDisplay(characters))
     }
@@ -43,11 +43,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path={"/character/:id"} element={ <CharacterContainer /> } />
-        {/* <Route path={} element={} />
-        <Route path={} element={} />
-        <Route path={} element={} /> */}
-        {/* <Route path="/character_form" element={ <CharacterForm /> } /> */}
-        <Route exact path="/" element={ <Home display={display} /> }/>
+        <Route exact path="/" element={ <Home display={display} category={category} setCategory={setCategory} /> }/>
       </Routes>
     </div>
   );

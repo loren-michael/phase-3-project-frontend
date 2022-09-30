@@ -1,8 +1,13 @@
 import React from 'react';
 
-function GameCard() {
+function GameCard({ game }) {
     return (
-        <div>Game Card</div>
+        <div>
+            <h4>{game.game_name}</h4>
+
+
+
+        </div>
     )
 };
 

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GameContainer from './GameContainer';
 import CharacterContainer from './CharacterContainer';
 
-function Home({ display }) {
-    const [category, setCategory] = useState("Games");
+function Home({ display, category, setCategory }) {
 
     function handleCategoryChange(e) {
         setCategory(e.target.value)
