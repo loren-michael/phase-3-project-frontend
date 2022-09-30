@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GameContainer() {
+function GameContainer({ display }) {
     return (
         <div>Game Container</div>
     )

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import GameContainer from './GameContainer';
 import CharacterContainer from './CharacterContainer';
-import PlayerContainer from './PlayerContainer';
 
-function Home() {
+function Home({ display }) {
     const [category, setCategory] = useState("Games");
 
     function handleCategoryChange(e) {
@@ -12,18 +11,15 @@ function Home() {
 
     return (
         <div>
-            <h2 class="center">Welcome to the D&D Database!</h2>
+            <h2 className="center">Welcome to the D&D Database!</h2>
             <p>Please select a category: </p>
             <select name="category" id="category" onChange={handleCategoryChange}>
                 <option value="Games">Games</option>
                 <option value="Characters">Characters</option>
-                <option value="Players">Players</option>
             </select>
             <br></br>
             <br></br>
-            {category === "Games" ? <GameContainer /> : null}
-            {category === "Characters" ? <CharacterContainer /> : null}
-            {category === "Players" ? <PlayerContainer /> : null}
+            {category === "Games" ? <GameContainer display={display} /> : <CharacterContainer display={display} />}
         </div>
     )
 };

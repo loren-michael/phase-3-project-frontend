@@ -1,10 +1,10 @@
 import React from 'react';
 
-function CharacterCard({ characters }) {
+function CharacterCard({ character }) {
     return (
         <div>Character Card
             <div class="char-card">
-
+                <h3>{character.name}</h3>
             </div>
         </div>
     )

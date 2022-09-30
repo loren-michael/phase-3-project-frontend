@@ -1,11 +1,16 @@
 import React from 'react';
 import Search from './Search';
+import CharacterCard from './CharacterCard';
 
-function CharacterContainer() {
+function CharacterContainer({ display }) {
     return (
         <div>
             <Search />
-            <div>Character Container</div>
+            {display.map(character => { 
+                return (
+                    <CharacterCard character={character} />
+                )
+            })}
 
 
         </div>
