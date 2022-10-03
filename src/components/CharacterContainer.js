@@ -8,7 +8,7 @@ function CharacterContainer({ display }) {
             <Search />
             {display.map(character => { 
                 return (
-                    <CharacterCard character={character} />
+                    <CharacterCard character={character} key={character.id} />
                 )
             })}
 

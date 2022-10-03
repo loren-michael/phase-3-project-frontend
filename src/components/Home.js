@@ -10,7 +10,7 @@ function Home({ display, category, setCategory }) {
 
     return (
         <div>
-            <h2 className="center">Welcome to the D&D Database!</h2>
+            <h2 className="center">Welcome to the Character Database!</h2>
             <p>Please select a category: </p>
             <select name="category" id="category" onChange={handleCategoryChange}>
                 <option value="Games">Games</option>

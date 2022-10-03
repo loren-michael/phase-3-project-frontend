@@ -6,7 +6,7 @@ function GameContainer({ display }) {
         <div>
             {display.map(game => {
                 return (
-                    <GameCard game={game} />
+                    <GameCard game={game} key={game.id} />
                 )
             })}
 
