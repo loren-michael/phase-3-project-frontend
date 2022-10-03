@@ -16,32 +16,68 @@ function App() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:9292/games`)
-      .then(r => r.json())
-      .then(games => setDisplay(games))
+    const id = localStorage.getItem('user_id')
+    if (id) {
+      fetch('http://localhost:9292/users/' + id)
+        .then(resp => resp.json())
+        .then(data => {
+          if (!data.message) {
+            login(data);
+          }
+        })
+    }
   }, [])
 
-  useEffect(() => {
-    if (category === "Games") {
-      fetch(`http://localhost:9292/games`)
-      .then(r => r.json())
-      .then(games => setDisplay(games))
+  const login = (user) => {
+    setCurrentUser(user);
+    setIsLoggedIn(true);
+    localStorage.setItem('user_id', user.id);
+  }
+
+  const logout = () => {
+    setCurrentUser({});
+    setIsLoggedIn(false);
+    localStorage.removeItem('user_id');
+  }
+
+  const renderLoggedIn = () => {
+    if (isLoggedIn) {
+      return (
+        <>
+          <div>You are logged in as { currentUser.username }</div>
+          <button onClick={ logout }>Logout</button>
+        </>
+      )
     }
-    else if (category === "Characters") {
-      fetch(`http://localhost:9292/characters`)
-      .then(r => r.json())
-      .then(characters => setDisplay(characters))
-    }
-  }, [category])
+  }
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:9292/games`)
+  //     .then(r => r.json())
+  //     .then(games => setDisplay(games))
+  // }, [])
+
+  // useEffect(() => {
+  //   if (category === "Games") {
+  //     fetch(`http://localhost:9292/games`)
+  //     .then(r => r.json())
+  //     .then(games => setDisplay(games))
+  //   }
+  //   else if (category === "Characters") {
+  //     fetch(`http://localhost:9292/characters`)
+  //     .then(r => r.json())
+  //     .then(characters => setDisplay(characters))
+  //   }
+  // }, [category])
 
 
 
   return (
     <div>
-      <NavBar />
+      { renderLoggedIn() }
       <Routes>
         <Route path={"/character/:id"} element={ <CharacterContainer /> } />
-        <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login /> }/>
+        <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} /> }/>
       </Routes>
     </div>
   );
