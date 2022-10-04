@@ -1,11 +1,11 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NavBar from './NavBar';
+// import NavBar from './NavBar';
 import Home from './Home';
 // import CharacterForm from './CharacterForm';
 import CharacterContainer from './CharacterContainer';
-import Signup from './Signup';
+// import Signup from './Signup';
 import Login from './Login';
 
 
@@ -58,18 +58,18 @@ function App() {
       .then(games => setDisplay(games))
   }, [])
 
-  // useEffect(() => {
-  //   if (category === "Games") {
-  //     fetch(`http://localhost:9292/games`)
-  //     .then(r => r.json())
-  //     .then(games => setDisplay(games))
-  //   }
-  //   else if (category === "Characters") {
-  //     fetch(`http://localhost:9292/characters`)
-  //     .then(r => r.json())
-  //     .then(characters => setDisplay(characters))
-  //   }
-  // }, [category])
+  useEffect(() => {
+    if (category === "Games") {
+      fetch(`http://localhost:9292/games`)
+      .then(r => r.json())
+      .then(games => setDisplay(games))
+    }
+    else if (category === "Characters") {
+      fetch(`http://localhost:9292/characters`)
+      .then(r => r.json())
+      .then(characters => setDisplay(characters))
+    }
+  }, [category])
 
 
 
@@ -78,7 +78,7 @@ function App() {
       { renderLoggedIn() }
       <Routes>
         <Route path={"/character/:id"} element={ <CharacterContainer /> } />
-        <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <><Login setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} /><Signup login={login}/></> }/>
+        <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login login={login} /> }/>
       </Routes>
     </div>
   );

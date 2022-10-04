@@ -9,7 +9,6 @@ function GameContainer({ display }) {
                     <GameCard game={game} key={game.id} />
                 )
             })}
-
         </div>
     )
 };
