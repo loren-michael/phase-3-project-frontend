@@ -71,13 +71,16 @@ function App() {
     }
   }, [category])
 
+  const handleDetails = () => {
+    console.log("Hello")
+  }
 
 
   return (
     <div>
       { renderLoggedIn() }
       <Routes>
-        <Route path={"/character/:id"} element={ <CharacterContainer /> } />
+        <Route path={"/character/:id"} element={ <CharacterContainer handleDetails={handleDetails} /> } />
         <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login login={login} /> }/>
       </Routes>
     </div>

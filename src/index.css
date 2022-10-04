@@ -14,8 +14,19 @@ code {
 
 .char-card {
   margin-left: 30px;
-  width: 500px;
+  width: 200px;
   border-style: solid;
+  border-width: 1px;
   margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.class-icon {
+  margin-left: 10px;
+  height: 50px;
+  width: auto;
+  display: block;
+  margin-right: auto;
   margin-bottom: 10px;
 }
