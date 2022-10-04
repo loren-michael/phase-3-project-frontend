@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = ({ login }) => {
   const [username, setUsername] = useState("")
+  const navigate = useNavigate();
 
   const handleLogin = e => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const Login = ({ login }) => {
           login(data)
         }
       })
+      .then(navigate(`/${username}`))
   }
 
   return (

@@ -30,3 +30,7 @@ code {
   margin-right: auto;
   margin-bottom: 10px;
 }
+
+.right-align {
+  float: right;
+}
