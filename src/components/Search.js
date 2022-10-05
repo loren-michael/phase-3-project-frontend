@@ -1,8 +1,17 @@
 import React from 'react';
 
-function Search() {
+function Search({ setSearch, onSearchChange }) {
+
+    function handleSearchChange(e) {
+        const searchInput = e.target.value;
+        setSearch(searchInput)
+        onSearchChange(searchInput)
+    }
+
     return (
-        <div>This is a search bar</div>
+        <div className="search-bar">
+            Search for a character: <input type="text" onChange={handleSearchChange} />
+        </div>
     )
 };
 

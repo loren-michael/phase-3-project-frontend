@@ -22,7 +22,6 @@ const Login = ({ login }) => {
           login(data)
         }
       })
-      .then(navigate(`/${username}`))
   }
 
   return (

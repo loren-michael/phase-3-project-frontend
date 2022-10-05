@@ -2,17 +2,15 @@ import React from 'react';
 import Search from './Search';
 import CharacterCard from './CharacterCard';
 
-function CharacterContainer({ display, handleDetails }) {
+function CharacterContainer({ display, handleDetails, onSearchChange, setSearch }) {
     return (
         <div>
-            <Search />
+            <Search setSearch={setSearch} onSearchChange={onSearchChange} />
             {display.map(character => { 
                 return (
                     <CharacterCard character={character} key={character.id} />
                 )
             })}
-
-
         </div>
     )
 };

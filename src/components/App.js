@@ -1,11 +1,8 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-// import NavBar from './NavBar';
 import Home from './Home';
-// import CharacterForm from './CharacterForm';
 import CharacterContainer from './CharacterContainer';
-// import Signup from './Signup';
 import Login from './Login';
 
 
@@ -14,6 +11,7 @@ function App() {
   const [display, setDisplay] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [search, setSearch] = useState("")
 
 
   useEffect(() => {
@@ -71,16 +69,17 @@ function App() {
     }
   }, [category])
 
-  const handleDetails = () => {
-    console.log("Hello")
+  function handleSearchChange() {
+    console.log(search)
   }
+
 
 
   return (
     <div>
       { renderLoggedIn() }
       <Routes>
-        <Route path={"/character/:id"} element={ <CharacterContainer handleDetails={handleDetails} /> } />
+        <Route path={"/:character"} element={ <CharacterContainer setSearch={setSearch} onSearchChange={handleSearchChange} /> } />
         <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login login={login} /> }/>
       </Routes>
     </div>
