@@ -1,12 +1,20 @@
 import React from 'react';
-import Search from './Search';
+import { useNavigate } from 'react-router-dom';
+
 import CharacterCard from './CharacterCard';
 
-function CharacterContainer({ display, handleDetails, onSearchChange, setSearch }) {
+function CharacterContainer({ currentUser, characters }) {
+    const navigate = useNavigate();
+
+    function handleNew() {
+        navigate(`/${currentUser.id}/character-creation`)
+    }
+
     return (
         <div>
-            <Search setSearch={setSearch} onSearchChange={onSearchChange} />
-            {display.map(character => { 
+            {/* <Search search={search} setSearch={setSearch} onSearchChange={onSearchChange} /> */}
+            <button onClick={handleNew}>Create a new character!</button>
+            {characters.map(character => { 
                 return (
                     <CharacterCard character={character} key={character.id} />
                 )

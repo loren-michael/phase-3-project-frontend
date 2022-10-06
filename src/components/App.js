@@ -1,17 +1,16 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './Home';
-import CharacterContainer from './CharacterContainer';
+import CharacterForm from './CharacterForm'
 import Login from './Login';
 
 
 function App() {
-  const [category, setCategory] = useState("Games");
-  const [display, setDisplay] = useState([]);
+  const navigate = useNavigate();
+  const [characters, setCharacters] = useState([])
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [search, setSearch] = useState("")
 
 
   useEffect(() => {
@@ -31,12 +30,14 @@ function App() {
     setCurrentUser(user);
     setIsLoggedIn(true);
     localStorage.setItem('user_id', user.id);
+    navigate(`/${user.id}/characters`)
   }
 
   const logout = () => {
     setCurrentUser({});
     setIsLoggedIn(false);
     localStorage.removeItem('user_id');
+    navigate("/")
   }
 
   const renderLoggedIn = () => {
@@ -51,36 +52,20 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:9292/games`)
+    fetch(`http://localhost:9292/${currentUser.id}/characters`)
       .then(r => r.json())
-      .then(games => setDisplay(games))
-  }, [])
-
-  useEffect(() => {
-    if (category === "Games") {
-      fetch(`http://localhost:9292/games`)
-      .then(r => r.json())
-      .then(games => setDisplay(games))
-    }
-    else if (category === "Characters") {
-      fetch(`http://localhost:9292/characters`)
-      .then(r => r.json())
-      .then(characters => setDisplay(characters))
-    }
-  }, [category])
-
-  function handleSearchChange() {
-    console.log(search)
-  }
-
-
+      .then(characters => setCharacters(characters))
+  }, [currentUser])
 
   return (
     <div>
       { renderLoggedIn() }
       <Routes>
-        <Route path={"/:character"} element={ <CharacterContainer setSearch={setSearch} onSearchChange={handleSearchChange} /> } />
-        <Route exact path="/" element={ isLoggedIn ? <Home display={display} category={category} setCategory={setCategory} /> : <Login login={login} /> }/>
+        <Route path={`/${currentUser.id}/character-creation`} element={<CharacterForm currentUser={currentUser} />} />
+        <Route path='/:id/characters' element={<Home currentUser={currentUser} characters={characters} />} />
+        {/* <Route path='/:id/:char_id' element={<Home display={games} />} /> */}
+        <Route exact path="/" 
+          element={ isLoggedIn ? <Home /> : <Login login={login} /> }/>
       </Routes>
     </div>
   );

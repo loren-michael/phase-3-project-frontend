@@ -1,18 +1,19 @@
-import React from 'react';
+
+import React from 'react'
 
 function Search({ setSearch, onSearchChange }) {
 
     function handleSearchChange(e) {
-        const searchInput = e.target.value;
-        setSearch(searchInput)
-        onSearchChange(searchInput)
+        const searchText = (e.target.value)
+        // onSearchChange(searchText)
+        setSearch(searchText)
     }
 
     return (
-        <div className="search-bar">
+        <div className="search">
             Search for a character: <input type="text" onChange={handleSearchChange} />
         </div>
     )
-};
+}
 
-export default Search;
+export default Search
