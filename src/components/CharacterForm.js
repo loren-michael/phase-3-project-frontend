@@ -1,52 +1,58 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CharacterForm({ currentUser, handleAddCharacter }) {
+function CharacterForm({ userId, setCharacters }) {
+    // const id = localStorage.getItem('user_id')
     const navigate = useNavigate();
-    const userId = currentUser.id
+    // const history = useHistory();
     const [newCharacter, setNewCharacter] = useState({
         name: "",
         race: "Dwarf",
-        character_class: "Fighter",
+        character_class: "Barbarian",
         level: 1,
-        icon: "https://styles.redditmedia.com/t5_2vbgl/styles/communityIcon_c329v6c343791.png",
+        icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
         game_id: 1,
         user_id: userId
     });
 
-    function handleClassChange(e) {
-        const selection = e.target.value;
-        setNewCharacter({...newCharacter, character_class: e.target.value});
+    function handleClassChange() {
+        const selection = newCharacter.character_class;
         if (selection === "Barbarian") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/0/636336416778392507.jpeg"})
         } else if (selection === "Bard") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/1/636336416923635770.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/1/636336416923635770.jpeg"})
         } else if (selection === "Cleric") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/2/636336417054144618.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/2/636336417054144618.jpeg"})
         } else if (selection === "Druid") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/3/636336417152216156.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/3/636336417152216156.jpeg"})
         } else if (selection === "Fighter") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/4/636336417268495752.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/4/636336417268495752.jpeg"})
         } else if (selection === "Monk") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/5/636336417372349522.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/5/636336417372349522.jpeg"})
         } else if (selection === "Paladin") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/6/636336417477714942.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/6/636336417477714942.jpeg"})
         } else if (selection === "Ranger") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/7/636336417569697438.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/7/636336417569697438.jpeg"})
         } else if (selection === "Rogue") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/8/636336417681318097.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/8/636336417681318097.jpeg"})
         } else if (selection === "Sorcerer") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/9/636336417773983369.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/9/636336417773983369.jpeg"})
         } else if (selection === "Warlock") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/12/636336422983071263.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/12/636336422983071263.jpeg"})
         } else if (selection === "Wizard") {
-            setNewCharacter({...newCharacter,icon: "https://www.dndbeyond.com/avatars/10/11/636336418370446635.jpeg"})
+            setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/11/636336418370446635.jpeg"})
         }
+    }
+    
+    function updateCharacters() {
+        fetch(`http://localhost:9292/${userId}/characters`)
+            .then(r => r.json())
+            .then(characters => setCharacters(characters))
     }
 
     function handleNewChar(e) {
         e.preventDefault();
-
+        handleClassChange();
         fetch(`http://localhost:9292/characters`, {
             method: "POST",
             headers: {
@@ -54,8 +60,8 @@ function CharacterForm({ currentUser, handleAddCharacter }) {
             },
             body: JSON.stringify(newCharacter)
         })
+        .then(updateCharacters())
         .then(navigate(`/${userId}/characters`))
-        // .then(handleAddCharacter())
     }
 
     return (
@@ -67,7 +73,7 @@ function CharacterForm({ currentUser, handleAddCharacter }) {
                 <input type="text" name="name" value={newCharacter.name} onChange={e => setNewCharacter({...newCharacter, name: e.target.value})} />
                 <br></br>
                 <label>Race (Choose one): </label>
-                <select name="race" value={newCharacter.race} onChange={e => setNewCharacter({race: e.target.value})}>
+                <select name="race" value={newCharacter.race} onChange={e => setNewCharacter({...newCharacter, race: e.target.value})}>
                     <option>Dwarf</option>
                     <option>Dragonborn</option>
                     <option>Elf</option>
@@ -78,7 +84,7 @@ function CharacterForm({ currentUser, handleAddCharacter }) {
                 </select>
                 <br></br>
                 <label>Class (Choose one): </label>
-                <select name="character-class" value={newCharacter.character_class} onChange={handleClassChange}>
+                <select name="character-class" value={newCharacter.character_class} onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}>
                     <option>Barbarian</option>
                     <option>Bard</option>
                     <option>Cleric</option>
@@ -116,9 +122,12 @@ function CharacterForm({ currentUser, handleAddCharacter }) {
                     <option>19</option>
                     <option>20</option>
                 </select>
+                <br></br>
+                <br></br>
+                <button type="Submit">Submit New Character</button>
             </form>
             <br></br>
-            <button type="Submit" onSubmit={handleNewChar}>Submit New Character</button>
+            
         </div>
     )
 };
