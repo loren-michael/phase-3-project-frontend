@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function CharacterForm({ userId, setCharacters }) {
-    // const id = localStorage.getItem('user_id')
     const navigate = useNavigate();
-    // const history = useHistory();
     const [newCharacter, setNewCharacter] = useState({
         name: "",
         race: "Dwarf",
@@ -70,10 +68,19 @@ function CharacterForm({ userId, setCharacters }) {
             <h4>Create a new character</h4>
             <form onSubmit={handleNewChar}>
                 <label>Character Name: </label>
-                <input type="text" name="name" value={newCharacter.name} onChange={e => setNewCharacter({...newCharacter, name: e.target.value})} />
+                <input 
+                    type="text"
+                    name="name"
+                    value={newCharacter.name}
+                    onChange={e => setNewCharacter({...newCharacter, name: e.target.value})}
+                />
                 <br></br>
                 <label>Race (Choose one): </label>
-                <select name="race" value={newCharacter.race} onChange={e => setNewCharacter({...newCharacter, race: e.target.value})}>
+                <select 
+                    name="race"
+                    value={newCharacter.race}
+                    onChange={e => setNewCharacter({...newCharacter, race: e.target.value})}
+                >
                     <option>Dwarf</option>
                     <option>Dragonborn</option>
                     <option>Elf</option>
@@ -84,7 +91,11 @@ function CharacterForm({ userId, setCharacters }) {
                 </select>
                 <br></br>
                 <label>Class (Choose one): </label>
-                <select name="character-class" value={newCharacter.character_class} onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}>
+                <select 
+                    name="character-class"
+                    value={newCharacter.character_class}
+                    onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}
+                >
                     <option>Barbarian</option>
                     <option>Bard</option>
                     <option>Cleric</option>
@@ -100,7 +111,11 @@ function CharacterForm({ userId, setCharacters }) {
                 </select>
                 <br></br>
                 <label>Level: </label>
-                <select name="level" value={newCharacter.level} onChange={e => setNewCharacter({...newCharacter, level: e.target.value})} >
+                <select 
+                    name="level"
+                    value={newCharacter.level}
+                    onChange={e => setNewCharacter({...newCharacter, level: e.target.value})}
+                >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>

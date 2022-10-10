@@ -11,10 +11,11 @@ function App() {
   const [characters, setCharacters] = useState([])
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const id = localStorage.getItem('user_id')
 
 
   useEffect(() => {
-    const id = localStorage.getItem('user_id')
+    // const id = localStorage.getItem('user_id')
     if (id) {
       fetch('http://localhost:9292/users/' + id)
         .then(resp => resp.json())
@@ -36,6 +37,7 @@ function App() {
   const logout = () => {
     setCurrentUser({});
     setIsLoggedIn(false);
+    setCharacters([]);
     localStorage.removeItem('user_id');
     navigate("/")
   }
@@ -52,9 +54,12 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:9292/${currentUser.id}/characters`)
+    // const id = localStorage.getItem('user_id')
+    if (id) {
+      fetch(`http://localhost:9292/${currentUser.id}/characters`)
       .then(r => r.json())
       .then(characters => setCharacters(characters))
+    }
   }, [currentUser])
 
 
@@ -62,10 +67,27 @@ function App() {
     <div>
       { renderLoggedIn() }
       <Routes>
-        <Route path={`/${currentUser.id}/character-creation`} element={<CharacterForm userId={currentUser.id} setCharacters={setCharacters} />} />
-        <Route path='/:id/characters' element={<Home currentUser={currentUser} characters={characters} setCharacters={setCharacters} />} />
-        {/* <Route path='/:id/:char_id' element={<Home display={games} />} /> */}
-        <Route exact path="/" element={ isLoggedIn ? <Home /> : <Login login={login} /> }/>
+        <Route 
+          path={`/${currentUser.id}/character-creation`} 
+          element={
+            <CharacterForm 
+              userId={currentUser.id} 
+              setCharacters={setCharacters} 
+            />} 
+          />
+        <Route 
+          path='/:id/characters' 
+          element={
+            <Home 
+              currentUser={currentUser} 
+              characters={characters} 
+              setCharacters={setCharacters}
+            />} 
+        />
+        <Route 
+          exact path="/" 
+          element={ isLoggedIn ? <Home /> : <Login login={login} /> }
+        />
       </Routes>
     </div>
   );

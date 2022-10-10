@@ -8,7 +8,11 @@ function Home({ currentUser, characters, setCharacters }) {
         <div>
             <h2>Welcome to the Character Database!</h2>
             <br></br>
-            {<CharacterContainer currentUser={currentUser} characters={characters} setCharacters={setCharacters} />}
+            {<CharacterContainer 
+                currentUser={currentUser}
+                characters={characters}
+                setCharacters={setCharacters}
+            />}
         </div>
     )
 };

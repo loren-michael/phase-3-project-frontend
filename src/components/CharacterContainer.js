@@ -12,11 +12,16 @@ function CharacterContainer({ currentUser, characters, setCharacters }) {
 
     return (
         <div>
-            {/* <Search search={search} setSearch={setSearch} onSearchChange={onSearchChange} /> */}
             <button onClick={handleNew}>Create a new character!</button>
             {characters.map(character => { 
                 return (
-                    <CharacterCard character={character} id={character.id} key={character.id} characters={characters} setCharacters={setCharacters} />
+                    <CharacterCard
+                        character={character}
+                        id={character.id}
+                        key={character.id}
+                        characters={characters}
+                        setCharacters={setCharacters}
+                    />
                 )
             })}
         </div>

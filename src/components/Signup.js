@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Login from './Login';
 
 function Signup({ login }) {
   const [username, setUsername] = useState("")

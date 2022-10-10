@@ -1,5 +1,4 @@
 import React, { useState }from 'react';
-// import { Link } from 'react-router-dom'
 
 function CharacterCard({ characters, setCharacters, character }) {
     const [charData, setCharData] = useState(character);
@@ -14,7 +13,6 @@ function CharacterCard({ characters, setCharacters, character }) {
             },
             body: JSON.stringify({level: newLevel})
         })
-        // .then(resp => resp.json())
     }
 
     function handleDelete() {
@@ -33,10 +31,8 @@ function CharacterCard({ characters, setCharacters, character }) {
     return (
         <div>
             <div className="char-card">
-            
                 <h4>{character.name}</h4>
                 <h5>Level {charData.level} {character.race} {character.character_class}</h5>
-                {/* <Link to={`/:id`} className="right-align">Details</Link> */}
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
                 <img className="class-icon" alt="icon" src={character.icon}></img>
                 <button onClick={handleDelete}>Delete Character</button>

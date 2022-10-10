@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 const Login = ({ login }) => {
   const [username, setUsername] = useState("")
-  const navigate = useNavigate();
 
   const handleLogin = e => {
     e.preventDefault();
@@ -30,7 +28,13 @@ const Login = ({ login }) => {
       <form onSubmit={ handleLogin }>
         <div>
           <label htmlFor="username">Username: </label>
-          <input type="text" name="username" id="username" value={ username } onChange={ e => setUsername(e.target.value) } />
+          <input 
+            type="text"
+            name="username"
+            id="username"
+            value={ username }
+            onChange={ e => setUsername(e.target.value) }
+          />
         </div>
         <input type="submit" value="Login" />
       </form>
