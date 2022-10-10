@@ -63,10 +63,9 @@ function App() {
       { renderLoggedIn() }
       <Routes>
         <Route path={`/${currentUser.id}/character-creation`} element={<CharacterForm userId={currentUser.id} setCharacters={setCharacters} />} />
-        <Route path='/:id/characters' element={<Home currentUser={currentUser} characters={characters} />} />
+        <Route path='/:id/characters' element={<Home currentUser={currentUser} characters={characters} setCharacters={setCharacters} />} />
         {/* <Route path='/:id/:char_id' element={<Home display={games} />} /> */}
-        <Route exact path="/" 
-          element={ isLoggedIn ? <Home /> : <Login login={login} /> }/>
+        <Route exact path="/" element={ isLoggedIn ? <Home /> : <Login login={login} /> }/>
       </Routes>
     </div>
   );

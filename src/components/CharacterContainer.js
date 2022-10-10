@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import CharacterCard from './CharacterCard';
 
-function CharacterContainer({ currentUser, characters }) {
+function CharacterContainer({ currentUser, characters, setCharacters }) {
     const navigate = useNavigate();
 
     function handleNew() {
@@ -16,7 +16,7 @@ function CharacterContainer({ currentUser, characters }) {
             <button onClick={handleNew}>Create a new character!</button>
             {characters.map(character => { 
                 return (
-                    <CharacterCard character={character} key={character.id} />
+                    <CharacterCard character={character} id={character.id} key={character.id} characters={characters} setCharacters={setCharacters} />
                 )
             })}
         </div>
