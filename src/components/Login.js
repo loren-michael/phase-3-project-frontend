@@ -18,6 +18,8 @@ const Login = ({ login }) => {
       .then(data => {
         if(!data.message) {
           login(data)
+        } else if (data.message) {
+          alert(data.message)
         }
       })
   }
