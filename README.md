@@ -38,7 +38,17 @@ Now that your Backend is up and running and the database is seeded, we can get y
 ```console
 $ npm start
 ```
-Once the application is up and running in your browser window, you will be able to log in to see different characters by using the following list of users:
+Once the application is running, you can try out the login feature by using the following usernames:
+player1
+player2
+player3
+player4
+player5
+player6
+player7
+player8
+
+The login functionality does not effect the rest of the app. All other features are accessible without loggin in.
 
 
 ## Read More
