@@ -59,6 +59,7 @@ function App() {
     fetch(`http://localhost:9292/users`)
       .then(r => r.json())
       .then(users => setUsers(users))
+      .then(console.log(users[0]))
   }, [])
 
 
@@ -71,7 +72,7 @@ function App() {
         <Route 
           path={`/character-creation`} 
           element={
-            <CharacterForm users={users} characters={characters} setCharacters={setCharacters}/>} 
+            <CharacterForm users={users} setUsers={setUsers} />} 
           />
         <Route 
           exact path="/" 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CharacterForm({ users, characters, setCharacters }) {
+function CharacterForm({ users, setUsers }) {
     const navigate = useNavigate();
     const [newCharacter, setNewCharacter] = useState({
         name: "",
@@ -13,52 +13,51 @@ function CharacterForm({ users, characters, setCharacters }) {
         user_id: 1
     });
 
-    function handleClassChange() {
-        const selection = newCharacter.character_class;
-        if (selection === "Barbarian") {
+    function handleClassChange(string) {
+        // const selection = newCharacter.character_class;
+        // console.log(string)
+        if (string === "Barbarian") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/0/636336416778392507.jpeg"})
-        } else if (selection === "Bard") {
+        } else if (string === "Bard") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/1/636336416923635770.jpeg"})
-        } else if (selection === "Cleric") {
+        } else if (string === "Cleric") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/2/636336417054144618.jpeg"})
-        } else if (selection === "Druid") {
+        } else if (string === "Druid") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/3/636336417152216156.jpeg"})
-        } else if (selection === "Fighter") {
+        } else if (string === "Fighter") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/4/636336417268495752.jpeg"})
-        } else if (selection === "Monk") {
+        } else if (string === "Monk") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/5/636336417372349522.jpeg"})
-        } else if (selection === "Paladin") {
+        } else if (string === "Paladin") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/6/636336417477714942.jpeg"})
-        } else if (selection === "Ranger") {
+        } else if (string === "Ranger") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/7/636336417569697438.jpeg"})
-        } else if (selection === "Rogue") {
+        } else if (string === "Rogue") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/8/636336417681318097.jpeg"})
-        } else if (selection === "Sorcerer") {
+        } else if (string === "Sorcerer") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/9/636336417773983369.jpeg"})
-        } else if (selection === "Warlock") {
+        } else if (string === "Warlock") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/12/636336422983071263.jpeg"})
-        } else if (selection === "Wizard") {
+        } else if (string === "Wizard") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/11/636336418370446635.jpeg"})
-        }
+        };
     }
     
     function handleUserIdAssignment(username) {
         const newUser = users.filter((user) => user.username === username)
-        // console.log(newUser[0].id)
         setNewCharacter({...newCharacter, user_id: newUser[0].id})
     }
-
-    // You need to rework this fetch address and remove the userid from this comp
-    // function updateCharacters() {
-    //     fetch(`http://localhost:9292/${userId}/characters`)
-    //         .then(r => r.json())
-    //         .then(characters => setCharacters(characters))
-    // }
 
     // Characters should update on state change, not a re-fetch
     function handleNewChar(e) {
         e.preventDefault();
-        handleClassChange();
+        handleClassChange(e.target.value);
+
+        // handleCharacterPost();
+
+    }
+
+    function handleCharacterPost() {
         fetch(`http://localhost:9292/characters`, {
             method: "POST",
             headers: {
@@ -67,8 +66,6 @@ function CharacterForm({ users, characters, setCharacters }) {
             body: JSON.stringify(newCharacter)
         })
         .then(navigate("/"))
-        .then(newCharacter => setCharacters({...characters, newCharacter}))
-        
     }
 
     return (
@@ -113,7 +110,8 @@ function CharacterForm({ users, characters, setCharacters }) {
                 <select 
                     name="character-class"
                     value={newCharacter.character_class}
-                    onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}
+                    // onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}
+                    onChange={e => handleClassChange(e.target.value)}
                 >
                     <option>Barbarian</option>
                     <option>Bard</option>

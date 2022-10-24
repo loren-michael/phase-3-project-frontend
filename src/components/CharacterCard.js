@@ -35,7 +35,7 @@ function CharacterCard({ user, character }) {
                 <h5>Level {charData.level} {character.race} {character.character_class}</h5>
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
                 <img className="class-icon" alt="icon" src={character.icon}></img>
-                {/* <button onClick={handleDelete}>Delete Character</button> */}
+                <button onClick={handleDelete}>Delete Character</button>
             </div>
         </div>
     )
