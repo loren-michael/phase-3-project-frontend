@@ -3,17 +3,20 @@ import { useNavigate } from 'react-router-dom';
 
 import CharacterCard from './CharacterCard';
 
-function CharacterContainer({ currentUser, characters, setCharacters }) {
+function CharacterContainer({ user }) {
     const navigate = useNavigate();
+    // const characters = user.characters
 
     function handleNew() {
-        navigate(`/${currentUser.id}/character-creation`)
+        // navigate(`/character-creation`)
+        // console.log(characters)
     }
 
     return (
         <div>
             <button onClick={handleNew}>Create a new character!</button>
-            {characters.map(character => { 
+
+            {/* {characters.map(character => { 
                 return (
                     <CharacterCard
                         character={character}
@@ -23,7 +26,7 @@ function CharacterContainer({ currentUser, characters, setCharacters }) {
                         setCharacters={setCharacters}
                     />
                 )
-            })}
+            })} */}
         </div>
     )
 };

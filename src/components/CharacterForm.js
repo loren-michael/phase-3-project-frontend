@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CharacterForm({ userId, setCharacters }) {
+function CharacterForm({ users, characters, setCharacters }) {
     const navigate = useNavigate();
     const [newCharacter, setNewCharacter] = useState({
         name: "",
@@ -9,8 +9,8 @@ function CharacterForm({ userId, setCharacters }) {
         character_class: "Barbarian",
         level: 1,
         icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
-        game_id: 1,
-        user_id: userId
+        // game_id: 1,
+        user_id: 1
     });
 
     function handleClassChange() {
@@ -42,12 +42,20 @@ function CharacterForm({ userId, setCharacters }) {
         }
     }
     
-    function updateCharacters() {
-        fetch(`http://localhost:9292/${userId}/characters`)
-            .then(r => r.json())
-            .then(characters => setCharacters(characters))
+    function handleUserIdAssignment(username) {
+        const newUser = users.filter((user) => user.username === username)
+        // console.log(newUser[0].id)
+        setNewCharacter({...newCharacter, user_id: newUser[0].id})
     }
 
+    // You need to rework this fetch address and remove the userid from this comp
+    // function updateCharacters() {
+    //     fetch(`http://localhost:9292/${userId}/characters`)
+    //         .then(r => r.json())
+    //         .then(characters => setCharacters(characters))
+    // }
+
+    // Characters should update on state change, not a re-fetch
     function handleNewChar(e) {
         e.preventDefault();
         handleClassChange();
@@ -58,8 +66,9 @@ function CharacterForm({ userId, setCharacters }) {
             },
             body: JSON.stringify(newCharacter)
         })
-        .then(updateCharacters())
-        .then(navigate(`/${userId}/characters`))
+        .then(navigate("/"))
+        .then(newCharacter => setCharacters({...characters, newCharacter}))
+        
     }
 
     return (
@@ -67,6 +76,16 @@ function CharacterForm({ userId, setCharacters }) {
             <br></br>
             <h4>Create a new character</h4>
             <form onSubmit={handleNewChar}>
+                <label>Choose a player: </label>
+                <select
+                    name="player-assignment"
+                    onChange={e => handleUserIdAssignment(e.target.value)}
+                >
+                    {users.map((user) => {
+                        return <option key={user.id}>{user.username}</option>
+                    })}
+                </select>
+                <br></br>
                 <label>Character Name: </label>
                 <input 
                     type="text"

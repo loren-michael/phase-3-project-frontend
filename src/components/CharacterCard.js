@@ -1,6 +1,6 @@
 import React, { useState }from 'react';
 
-function CharacterCard({ characters, setCharacters, character }) {
+function CharacterCard({ user, character }) {
     const [charData, setCharData] = useState(character);
 
     function handleLevelUp() {
@@ -20,13 +20,13 @@ function CharacterCard({ characters, setCharacters, character }) {
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(handleRefresh())
+        // .then(handleRefresh())
     }
 
-    function handleRefresh() {
-    const filtered = characters.filter(char => char.id !== character.id)
-    setCharacters(filtered)
-    }
+    // function handleRefresh() {
+    // const filtered = characters.filter(char => char.id !== character.id)
+    // setCharacters(filtered)
+    // }
 
     return (
         <div>
@@ -35,7 +35,7 @@ function CharacterCard({ characters, setCharacters, character }) {
                 <h5>Level {charData.level} {character.race} {character.character_class}</h5>
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
                 <img className="class-icon" alt="icon" src={character.icon}></img>
-                <button onClick={handleDelete}>Delete Character</button>
+                {/* <button onClick={handleDelete}>Delete Character</button> */}
             </div>
         </div>
     )

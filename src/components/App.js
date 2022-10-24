@@ -8,6 +8,7 @@ import Login from './Login';
 
 function App() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([])
   const [characters, setCharacters] = useState([])
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,7 +32,7 @@ function App() {
     setCurrentUser(user);
     setIsLoggedIn(true);
     localStorage.setItem('user_id', user.id);
-    navigate(`/${user.id}/characters`)
+    // navigate(`/characters`)
   }
 
   const logout = () => {
@@ -53,40 +54,28 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    // const id = localStorage.getItem('user_id')
-    if (id) {
-      fetch(`http://localhost:9292/${currentUser.id}/characters`)
+
+  useEffect(() =>{
+    fetch(`http://localhost:9292/users`)
       .then(r => r.json())
-      .then(characters => setCharacters(characters))
-    }
-  }, [currentUser])
+      .then(users => setUsers(users))
+  }, [])
 
 
   return (
     <div>
-      { renderLoggedIn() }
+      <div>
+          { isLoggedIn ? renderLoggedIn() : <Login login={login} /> }
+      </div>
       <Routes>
         <Route 
-          path={`/${currentUser.id}/character-creation`} 
+          path={`/character-creation`} 
           element={
-            <CharacterForm 
-              userId={currentUser.id} 
-              setCharacters={setCharacters} 
-            />} 
+            <CharacterForm users={users} characters={characters} setCharacters={setCharacters}/>} 
           />
         <Route 
-          path='/:id/characters' 
-          element={
-            <Home 
-              currentUser={currentUser} 
-              characters={characters} 
-              setCharacters={setCharacters}
-            />} 
-        />
-        <Route 
           exact path="/" 
-          element={ isLoggedIn ? <Home /> : <Login login={login} /> }
+          element={<Home users={users} />}
         />
       </Routes>
     </div>
