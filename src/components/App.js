@@ -56,10 +56,9 @@ function App() {
 
 
   useEffect(() =>{
-    fetch(`http://localhost:9292/users`)
+    fetch(`http://localhost:9292/characters`)
       .then(r => r.json())
-      .then(users => setUsers(users))
-      .then(console.log(users[0]))
+      .then(characters => setCharacters(characters))
   }, [])
 
 
@@ -76,7 +75,7 @@ function App() {
           />
         <Route 
           exact path="/" 
-          element={<Home users={users} />}
+          element={<Home users={users} characters={characters} />}
         />
       </Routes>
     </div>

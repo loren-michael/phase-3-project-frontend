@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 function CharacterForm({ users, setUsers }) {
     const navigate = useNavigate();
+    const [targetUser, setTargetUser] = useState(1)
+    const [updatedUser, setUpdatedUser] = useState({
+        id: targetUser,
+        // username: 
+    })
     const [newCharacter, setNewCharacter] = useState({
         name: "",
         race: "Dwarf",
@@ -10,12 +15,18 @@ function CharacterForm({ users, setUsers }) {
         level: 1,
         icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
         // game_id: 1,
-        user_id: 1
+        user_id: users[0].id
     });
 
+    // Characters should update on state change, not a re-fetch
+    function handleNewChar(e) {
+        e.preventDefault();
+        handleClassChange(e.target.value);
+        handleUserIdAssignment();
+        handleCharacterPost();
+    };
+
     function handleClassChange(string) {
-        // const selection = newCharacter.character_class;
-        // console.log(string)
         if (string === "Barbarian") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/0/636336416778392507.jpeg"})
         } else if (string === "Bard") {
@@ -41,20 +52,10 @@ function CharacterForm({ users, setUsers }) {
         } else if (string === "Wizard") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/11/636336418370446635.jpeg"})
         };
-    }
-    
+    };
+
     function handleUserIdAssignment(username) {
-        const newUser = users.filter((user) => user.username === username)
-        setNewCharacter({...newCharacter, user_id: newUser[0].id})
-    }
-
-    // Characters should update on state change, not a re-fetch
-    function handleNewChar(e) {
-        e.preventDefault();
-        handleClassChange(e.target.value);
-
-        // handleCharacterPost();
-
+        console.log("username", username)
     }
 
     function handleCharacterPost() {
@@ -65,7 +66,18 @@ function CharacterForm({ users, setUsers }) {
             },
             body: JSON.stringify(newCharacter)
         })
+        // .then(setUsers(updatedUsers))
         .then(navigate("/"))
+        // .then(refreshUsers(newCharacter))
+    };
+
+
+    function refreshUsers(newCharacter) {
+        console.log("users", users)
+        console.log("new char", newCharacter)
+        const updatedUser = users.filter((user) => (user.id == newCharacter.user_id))
+        users.filter((user) => console.log(user.id))
+        console.log("updated user", updatedUser)
     }
 
     return (
@@ -74,10 +86,11 @@ function CharacterForm({ users, setUsers }) {
             <h4>Create a new character</h4>
             <form onSubmit={handleNewChar}>
                 <label>Choose a player: </label>
-                <select
+                <select required
                     name="player-assignment"
                     onChange={e => handleUserIdAssignment(e.target.value)}
                 >
+                    <option></option>
                     {users.map((user) => {
                         return <option key={user.id}>{user.username}</option>
                     })}

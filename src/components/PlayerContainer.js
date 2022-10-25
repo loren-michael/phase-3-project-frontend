@@ -1,13 +1,13 @@
 import React, { useTransition } from 'react'
 import CharacterCard from './CharacterCard'
 
-function PlayerContainer({ user }) {
+function PlayerContainer({ user, characters }) {
 
   return <div>
-    {user.username}'s Characters
-    {user.characters.map((char) => {
+    {/* {user.username}'s Characters */}
+    {characters.map((character) => {
       return (
-        <CharacterCard key={char.id} character={char} />
+        <CharacterCard key={character.id} character={character} />
       )
     })}
     <br></br>
