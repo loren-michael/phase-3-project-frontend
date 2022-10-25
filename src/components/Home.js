@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CharacterCard from './CharacterCard';
-import PlayerContainer from './PlayerContainer'
 
 
 function Home({ users, characters }) {
@@ -17,9 +16,9 @@ function Home({ users, characters }) {
             <br></br>
             <button onClick={handleNew}>Create a new character!</button>
             <br></br>
-            {characters.map((char) => {
+            {characters.map((character) => {
                 return (
-                    <CharacterCard char={char} user={char.user} />
+                    <CharacterCard key={character.id} character={character} user={character.user} />
                 )
             })}
         </div>

@@ -23,16 +23,13 @@ function CharacterCard({ user, character }) {
         // .then(handleRefresh())
     }
 
-    // function handleRefresh() {
-    // const filtered = characters.filter(char => char.id !== character.id)
-    // setCharacters(filtered)
-    // }
 
     return (
         <div>
             <div className="char-card">
                 <h4>{character.name}</h4>
-                <h5>Level {charData.level} {character.race} {character.character_class}</h5>
+                <h5>Level {character.level} {character.race} {character.character_class}</h5>
+                
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
                 <img className="class-icon" alt="icon" src={character.icon}></img>
                 <button onClick={handleDelete}>Delete Character</button>
