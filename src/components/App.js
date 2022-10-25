@@ -75,7 +75,7 @@ function App() {
           />
         <Route 
           exact path="/" 
-          element={<Home users={users} characters={characters} />}
+          element={<Home users={users} characters={characters} setCharacters={setCharacters} />}
         />
       </Routes>
     </div>

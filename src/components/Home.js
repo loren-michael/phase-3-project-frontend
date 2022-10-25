@@ -3,13 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import CharacterCard from './CharacterCard';
 
 
-function Home({ users, characters }) {
+function Home({ characters, setCharacters }) {
     const navigate = useNavigate();
     
     function handleNew() {
         navigate(`/character-creation`)
     }
-    
+
+    function updateCharacters(id) {
+        const updatedCharacters = characters.filter((char) => char.id !== id)
+        setCharacters(updatedCharacters)
+    }
+
     return (
         <div>
             <h2>Welcome to the Character Database!</h2>
@@ -18,7 +23,7 @@ function Home({ users, characters }) {
             <br></br>
             {characters.map((character) => {
                 return (
-                    <CharacterCard key={character.id} character={character} user={character.user} />
+                    <CharacterCard key={character.id} updateCharacters={updateCharacters} character={character} user={character.user} />
                 )
             })}
         </div>

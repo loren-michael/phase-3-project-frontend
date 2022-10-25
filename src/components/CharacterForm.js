@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CharacterForm({ users, setUsers }) {
+function CharacterForm({ characters }) {
     const navigate = useNavigate();
-    const [targetUser, setTargetUser] = useState(1)
-    const [updatedUser, setUpdatedUser] = useState({
-        id: targetUser,
-        // username: 
-    })
+    
     const [newCharacter, setNewCharacter] = useState({
         name: "",
         race: "Dwarf",
@@ -15,7 +11,7 @@ function CharacterForm({ users, setUsers }) {
         level: 1,
         icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
         // game_id: 1,
-        user_id: users[0].id
+        user_id: null
     });
 
     // Characters should update on state change, not a re-fetch
@@ -72,13 +68,13 @@ function CharacterForm({ users, setUsers }) {
     };
 
 
-    function refreshUsers(newCharacter) {
-        console.log("users", users)
-        console.log("new char", newCharacter)
-        const updatedUser = users.filter((user) => (user.id == newCharacter.user_id))
-        users.filter((user) => console.log(user.id))
-        console.log("updated user", updatedUser)
-    }
+    // function refreshUsers(newCharacter) {
+        // console.log("users", users)
+        // console.log("new char", newCharacter)
+        // const updatedUser = users.filter((user) => (user.id == newCharacter.user_id))
+        // users.filter((user) => console.log(user.id))
+        // console.log("updated user", updatedUser)
+    // }
 
     return (
         <div>
@@ -91,9 +87,9 @@ function CharacterForm({ users, setUsers }) {
                     onChange={e => handleUserIdAssignment(e.target.value)}
                 >
                     <option></option>
-                    {users.map((user) => {
+                    {/* {users.map((user) => {
                         return <option key={user.id}>{user.username}</option>
-                    })}
+                    })} */}
                 </select>
                 <br></br>
                 <label>Character Name: </label>
