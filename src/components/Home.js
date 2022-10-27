@@ -1,17 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import CharacterCard from './CharacterCard';
+import PlayerContainer from './PlayerContainer';
 
-
-function Home({ characters, setCharacters }) {
-    const navigate = useNavigate();
-    
-    function handleNew() {
-        navigate(`/character-creation`)
-    }
+function Home({ users, characters, setCharacters, setPlayerAddingTo }) {
 
     function updateCharacters(id) {
-        const updatedCharacters = characters.filter((char) => char.id !== id)
+        const updatedCharacters = characters.filter((char) => char.id !== id);
         setCharacters(updatedCharacters)
     }
 
@@ -19,11 +12,15 @@ function Home({ characters, setCharacters }) {
         <div>
             <h2>Welcome to the Character Database!</h2>
             <br></br>
-            <button onClick={handleNew}>Create a new character!</button>
             <br></br>
-            {characters.map((character) => {
+            {users.map((user) => {
                 return (
-                    <CharacterCard key={character.id} updateCharacters={updateCharacters} character={character} user={character.user} />
+                    <PlayerContainer
+                        key={user.id}
+                        updateCharacters={updateCharacters}
+                        user={user} 
+                        setPlayerAddingTo={setPlayerAddingTo}
+                    />
                 )
             })}
         </div>

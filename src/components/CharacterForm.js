@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { updateLanguageServiceSourceFile } from 'typescript';
 
-function CharacterForm({ characters }) {
+function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
     const navigate = useNavigate();
-    
+    const playerId = playerAddingTo.id;
+    const playerUsername = playerAddingTo.username;
+    const [existingCharacters, setExistingCharacters] = useState(playerAddingTo.characters);
     const [newCharacter, setNewCharacter] = useState({
         name: "",
-        race: "Dwarf",
-        character_class: "Barbarian",
+        race: "",
+        character_class: "",
         level: 1,
         icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
         // game_id: 1,
-        user_id: null
+        user_id: playerId
     });
 
-    // Characters should update on state change, not a re-fetch
     function handleNewChar(e) {
         e.preventDefault();
-        handleClassChange(e.target.value);
-        handleUserIdAssignment();
-        handleCharacterPost();
-    };
+        console.log("player adding to", playerAddingTo)
+        console.log(existingCharacters)
+        handleClassChange();
+        setExistingCharacters([...existingCharacters, newCharacter]);
+        handleCharacterPost()
+    }
 
-    function handleClassChange(string) {
+    function handleClassChange() {
+        const string = newCharacter.character_class;
         if (string === "Barbarian") {
             setNewCharacter({...newCharacter, icon: "https://www.dndbeyond.com/avatars/10/0/636336416778392507.jpeg"})
         } else if (string === "Bard") {
@@ -50,8 +55,14 @@ function CharacterForm({ characters }) {
         };
     };
 
-    function handleUserIdAssignment(username) {
-        console.log("username", username)
+    function updatePlayerAddingTo() {
+        setPlayerAddingTo({...playerAddingTo, characters: [existingCharacters]});
+        updateUsers();
+    }
+
+    function updateUsers() {
+        const playerIndex = users.findIndex(user => user.id === playerId);
+        setUsers([...users[playerIndex].characters, existingCharacters]);
     }
 
     function handleCharacterPost() {
@@ -62,38 +73,20 @@ function CharacterForm({ characters }) {
             },
             body: JSON.stringify(newCharacter)
         })
-        // .then(setUsers(updatedUsers))
         .then(navigate("/"))
-        // .then(refreshUsers(newCharacter))
+        .then(() => updatePlayerAddingTo(newCharacter))
     };
 
-
-    // function refreshUsers(newCharacter) {
-        // console.log("users", users)
-        // console.log("new char", newCharacter)
-        // const updatedUser = users.filter((user) => (user.id == newCharacter.user_id))
-        // users.filter((user) => console.log(user.id))
-        // console.log("updated user", updatedUser)
-    // }
 
     return (
         <div>
             <br></br>
-            <h4>Create a new character</h4>
+            <h3>Create a new character</h3>
             <form onSubmit={handleNewChar}>
-                <label>Choose a player: </label>
-                <select required
-                    name="player-assignment"
-                    onChange={e => handleUserIdAssignment(e.target.value)}
-                >
-                    <option></option>
-                    {/* {users.map((user) => {
-                        return <option key={user.id}>{user.username}</option>
-                    })} */}
-                </select>
-                <br></br>
+                <h4>Adding to {playerUsername}'s characters</h4>
                 <label>Character Name: </label>
                 <input 
+                    required
                     type="text"
                     name="name"
                     value={newCharacter.name}
@@ -102,10 +95,12 @@ function CharacterForm({ characters }) {
                 <br></br>
                 <label>Race (Choose one): </label>
                 <select 
+                    required
                     name="race"
                     value={newCharacter.race}
                     onChange={e => setNewCharacter({...newCharacter, race: e.target.value})}
                 >
+                    <option></option>
                     <option>Dwarf</option>
                     <option>Dragonborn</option>
                     <option>Elf</option>
@@ -117,11 +112,12 @@ function CharacterForm({ characters }) {
                 <br></br>
                 <label>Class (Choose one): </label>
                 <select 
+                    required
                     name="character-class"
                     value={newCharacter.character_class}
-                    // onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}
-                    onChange={e => handleClassChange(e.target.value)}
+                    onChange={e => setNewCharacter({...newCharacter, character_class: e.target.value})}
                 >
+                    <option></option>
                     <option>Barbarian</option>
                     <option>Bard</option>
                     <option>Cleric</option>

@@ -1,6 +1,6 @@
 import React, { useState }from 'react';
 
-function CharacterCard({ character, updateCharacters }) {
+function CharacterCard({ character, chars, setChars }) {
     const [charData, setCharData] = useState(character);
 
     function handleLevelUp() {
@@ -16,21 +16,21 @@ function CharacterCard({ character, updateCharacters }) {
     }
 
     function handleDelete() {
+        const newChars = chars.filter(char => char.id !== character.id)
         fetch(`http://localhost:9292/characters/${character.id}`, {
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(updateCharacters(character.id))
+        .then(setChars(newChars))
     }
 
     return (
         <div>
             <div className="char-card">
-                <h4>{character.name}</h4>
-                <p>{character.user.username}'s character</p>
-                <h5>Level {charData.level} {character.race} {character.character_class}</h5>
+                <h4>{charData.name}</h4>
+                <h5>Level {charData.level} {charData.race} {charData.character_class}</h5>
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
-                <img className="class-icon" alt="icon" src={character.icon}></img>
+                <img className="class-icon" alt="icon" src={charData.icon}></img>
                 <button onClick={handleDelete}>Delete Character</button>
             </div>
         </div>

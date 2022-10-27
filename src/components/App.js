@@ -9,12 +9,13 @@ import Login from './Login';
 function App() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([])
-  const [characters, setCharacters] = useState([])
+  const [characters, setCharacters] = useState([]);
+  const [playerAddingTo, setPlayerAddingTo] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const id = localStorage.getItem('user_id')
 
-
+// LOGIN SECTION
   useEffect(() => {
     // const id = localStorage.getItem('user_id')
     if (id) {
@@ -54,13 +55,27 @@ function App() {
     }
   }
 
+// INITIAL USEEFFECT
+  // useEffect(() =>{
+  //   fetch(`http://localhost:9292/characters`)
+  //     .then(r => r.json())
+  //     .then(characters => setCharacters(characters))
+  // }, [])
 
-  useEffect(() =>{
-    fetch(`http://localhost:9292/characters`)
+  useEffect(() => {
+    fetch(`http://localhost:9292/users`)
       .then(r => r.json())
-      .then(characters => setCharacters(characters))
-  }, [])
+      .then(users => setUsers(users))
+      // .then(users => processCharacters(users))
+    }, []);
 
+  // function processCharacters(users) {
+  //   users.map(user => {
+  //     user.characters.map(char => {
+  //       setCharacters([...characters, char])
+  //     })
+  //   })
+  // };
 
   return (
     <div>
@@ -70,12 +85,25 @@ function App() {
       <Routes>
         <Route 
           path={`/character-creation`} 
-          element={
-            <CharacterForm users={users} setUsers={setUsers} />} 
-          />
+          element={ 
+            <CharacterForm 
+              users={users} 
+              setUsers={setUsers} 
+              playerAddingTo={playerAddingTo} 
+              setPlayerAddingTo={setPlayerAddingTo}
+            /> 
+          } 
+        />
         <Route 
           exact path="/" 
-          element={<Home users={users} characters={characters} setCharacters={setCharacters} />}
+          element={ 
+            <Home 
+              users={users} 
+              characters={characters} 
+              setCharacters={setCharacters} 
+              setPlayerAddingTo={setPlayerAddingTo} 
+            /> 
+          }
         />
       </Routes>
     </div>
