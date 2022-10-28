@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
 
 function CharacterCard({ character, chars, setChars }) {
     const [charData, setCharData] = useState(character);
