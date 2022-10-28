@@ -19,11 +19,9 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
 
     function handleNewChar(e) {
         e.preventDefault();
-        console.log("player adding to", playerAddingTo)
-        console.log(existingCharacters)
         handleClassChange();
-        setExistingCharacters([...existingCharacters, newCharacter]);
-        handleCharacterPost()
+        setPlayerAddingTo({...playerAddingTo, characters: [...existingCharacters, newCharacter]});
+        handleCharacterPost();
     }
 
     function handleClassChange() {
@@ -55,14 +53,18 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
         };
     };
 
-    function updatePlayerAddingTo() {
-        setPlayerAddingTo({...playerAddingTo, characters: [existingCharacters]});
-        updateUsers();
-    }
+    // function updatePlayerAddingTo() {
+    //     setPlayerAddingTo({...playerAddingTo, characters: [existingCharacters]});
+    //     updateUsers();
+    // }
 
     function updateUsers() {
         const playerIndex = users.findIndex(user => user.id === playerId);
-        setUsers([...users[playerIndex].characters, existingCharacters]);
+        console.log(users[playerIndex])
+        const newUsers = users
+        newUsers[playerIndex].characters.push(newCharacter)
+        console.log("new users", newUsers)
+        setUsers(newUsers)
     }
 
     function handleCharacterPost() {
@@ -73,8 +75,8 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
             },
             body: JSON.stringify(newCharacter)
         })
+        .then(updateUsers())        
         .then(navigate("/"))
-        .then(() => updatePlayerAddingTo(newCharacter))
     };
 
 

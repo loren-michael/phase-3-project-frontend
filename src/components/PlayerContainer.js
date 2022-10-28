@@ -15,7 +15,7 @@ function PlayerContainer({ user, updateCharacters, setPlayerAddingTo }) {
   return (
     <div>
       <h4>{user.username}'s Characters</h4>
-      <button id={user.id} onClick={handleNew}>Add a new {user.username} character</button>
+      <button key={user.id} id={user.id} onClick={handleNew}>Add a new {user.username} character</button>
       {chars.map(character => {
         return (
           <CharacterCard 

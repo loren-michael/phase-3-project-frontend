@@ -8,12 +8,12 @@ import Login from './Login';
 
 function App() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]); // this is used in the useeffect fetch to set all user data including characters. master state.
   const [characters, setCharacters] = useState([]);
   const [playerAddingTo, setPlayerAddingTo] = useState({});
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const id = localStorage.getItem('user_id')
+  const [currentUser, setCurrentUser] = useState({}); // login
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // login
+  const id = localStorage.getItem('user_id')  // login
 
 // LOGIN SECTION
   useEffect(() => {
