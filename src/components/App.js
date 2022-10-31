@@ -60,7 +60,7 @@ function App() {
     fetch(`http://localhost:9292/users`)
       .then(r => r.json())
       .then(users => setUsers(users))
-    }, []);
+    }, [users]);
 
 
   return (

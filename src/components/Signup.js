@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function Signup({ login, users, setUsers }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [username, setUsername] = useState({
     username: "",
     password: null
@@ -21,8 +21,8 @@ function Signup({ login, users, setUsers }) {
       body: JSON.stringify(username)
     })
     .then(resp => resp.json())
-    .then(users => setUsers(users))
-    
+    .then(users => console.log(users))
+
   }
     // e.preventDefault();
     // console.log(username)
