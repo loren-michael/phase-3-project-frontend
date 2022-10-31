@@ -4,20 +4,21 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './Home';
 import CharacterForm from './CharacterForm'
 import Login from './Login';
+import Signup from './Signup';
 
 
 function App() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]); // this is used in the useeffect fetch to set all user data including characters. master state.
+  const [users, setUsers] = useState([]); // primary db state
   const [characters, setCharacters] = useState([]);
   const [playerAddingTo, setPlayerAddingTo] = useState({});
   const [currentUser, setCurrentUser] = useState({}); // login
   const [isLoggedIn, setIsLoggedIn] = useState(false); // login
   const id = localStorage.getItem('user_id')  // login
 
+
 // LOGIN SECTION
   useEffect(() => {
-    // const id = localStorage.getItem('user_id')
     if (id) {
       fetch('http://localhost:9292/users/' + id)
         .then(resp => resp.json())
@@ -33,7 +34,6 @@ function App() {
     setCurrentUser(user);
     setIsLoggedIn(true);
     localStorage.setItem('user_id', user.id);
-    // navigate(`/characters`)
   }
 
   const logout = () => {
@@ -55,32 +55,18 @@ function App() {
     }
   }
 
-// INITIAL USEEFFECT
-  // useEffect(() =>{
-  //   fetch(`http://localhost:9292/characters`)
-  //     .then(r => r.json())
-  //     .then(characters => setCharacters(characters))
-  // }, [])
-
+// APP SECTION
   useEffect(() => {
     fetch(`http://localhost:9292/users`)
       .then(r => r.json())
       .then(users => setUsers(users))
-      // .then(users => processCharacters(users))
     }, []);
 
-  // function processCharacters(users) {
-  //   users.map(user => {
-  //     user.characters.map(char => {
-  //       setCharacters([...characters, char])
-  //     })
-  //   })
-  // };
 
   return (
     <div>
       <div>
-          { isLoggedIn ? renderLoggedIn() : <Login login={login} /> }
+          { isLoggedIn ? renderLoggedIn() : <><Login login={login} /><Signup login={login} users={users} setUsers={setUsers} /></> }
       </div>
       <Routes>
         <Route 

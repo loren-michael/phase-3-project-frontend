@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { updateLanguageServiceSourceFile } from 'typescript';
+
 
 function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
     const navigate = useNavigate();
@@ -13,7 +13,6 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
         character_class: "",
         level: 1,
         icon: "https://dnd.dragonmag.com/wp-content/uploads/sites/587/2020/08/rozilla74-ampersand-1.jpg",
-        // game_id: 1,
         user_id: playerId
     });
 
@@ -53,17 +52,11 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
         };
     };
 
-    // function updatePlayerAddingTo() {
-    //     setPlayerAddingTo({...playerAddingTo, characters: [existingCharacters]});
-    //     updateUsers();
-    // }
 
     function updateUsers() {
         const playerIndex = users.findIndex(user => user.id === playerId);
-        console.log(users[playerIndex])
         const newUsers = users
         newUsers[playerIndex].characters.push(newCharacter)
-        console.log("new users", newUsers)
         setUsers(newUsers)
     }
 
