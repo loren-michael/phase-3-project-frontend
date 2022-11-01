@@ -19,10 +19,6 @@ function Signup({ login, users, setUsers }) {
       body: JSON.stringify(username)
     })
     .then(resp => resp.json())
-    // .then(users => {
-    //   const newUsers = users;
-    //   setUsers(newUsers)
-    // })
     .then(data => {
       if (!data.message) {
         const newUsers = data;
