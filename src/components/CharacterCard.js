@@ -27,7 +27,7 @@ function CharacterCard({ character, chars, setChars }) {
     return (
         <div>
             <div className="char-card">
-                <h4>{charData.id} {charData.name}</h4>
+                <h4>{charData.name}</h4>
                 <h5>Level {charData.level} {charData.race} {charData.character_class}</h5>
                 {charData.level === 20 ? null : <button onClick={handleLevelUp}>Level Up!</button>}
                 <img className="class-icon" alt="icon" src={charData.icon}></img>

@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+
 
 function Signup({ login, users, setUsers }) {
-  // const navigate = useNavigate();
   const [username, setUsername] = useState({
     username: "",
     password: null
   });
-  // const [username, setUsername] = useState('')
+
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(username)
     fetch('http://localhost:9292/signup', {
       method: "POST",
       headers: {
@@ -21,47 +19,20 @@ function Signup({ login, users, setUsers }) {
       body: JSON.stringify(username)
     })
     .then(resp => resp.json())
-    .then(users => {
-      const newUsers = users;
-      setUsers(newUsers)
-    })
-
-  }
-    // e.preventDefault();
-    // console.log(username)
-    // console.log(users)
-    // fetch('http://localhost:9292/signup', {
-      // method: "POST",
-      // headers: {
-        // "Accept": "application/json",
-        // "Content/Type": "application/json"
-      // },
-      // body: JSON.stringify(username)
+    // .then(users => {
+    //   const newUsers = users;
+    //   setUsers(newUsers)
     // })
-      //   
-      // .then(resp => resp.json())
-      // .then(data => console.log(data))
-      // .then(data => {
-      //   if (!data.message) {
-      //     login(data)
-      //   } else if (data.message) {
-      //     alert(data.message)
-      //   }})
-    // .then(setUsers([...users, username]))
-      
-  // };
-
-//   function handleCharacterPost() {
-//     fetch(`http://localhost:9292/signup`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(username)
-//     })
-//     .then(updateUsers())        
-//     .then(navigate("/"))
-// };
+    .then(data => {
+      if (!data.message) {
+        const newUsers = data;
+        setUsers(newUsers)
+      } else if (data.message) {
+        alert(data.message)
+      }
+    })
+    .then(setUsername({username: ""}))
+  }
 
 
   return (

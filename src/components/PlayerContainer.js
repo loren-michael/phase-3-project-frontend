@@ -19,7 +19,7 @@ function PlayerContainer({ user, updateCharacters, setPlayerAddingTo }) {
       {chars.map(character => {
         return (
           <CharacterCard 
-            key={character.name} 
+            key={character.id} 
             character={character} 
             updateCharacters={updateCharacters} 
             chars={chars}
