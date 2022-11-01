@@ -53,11 +53,13 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
     };
 
 
-    function updateUsers() {
+    function updateUsers(data) {
         const playerIndex = users.findIndex(user => user.id === playerId);
         const newUsers = users
-        newUsers[playerIndex].characters.push(newCharacter)
+        newUsers[playerIndex].characters.push(data)
+        console.log(newUsers)
         setUsers(newUsers)
+        navigate("/")
     }
 
     function handleCharacterPost() {
@@ -68,8 +70,8 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
             },
             body: JSON.stringify(newCharacter)
         })
-        .then(updateUsers())        
-        .then(navigate("/"))
+        .then(resp => resp.json())
+        .then(data => updateUsers(data))
     };
 
 

@@ -21,7 +21,10 @@ function Signup({ login, users, setUsers }) {
       body: JSON.stringify(username)
     })
     .then(resp => resp.json())
-    .then(users => console.log(users))
+    .then(users => {
+      const newUsers = users;
+      setUsers(newUsers)
+    })
 
   }
     // e.preventDefault();
