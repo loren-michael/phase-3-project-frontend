@@ -57,7 +57,7 @@ function CharacterForm({ playerAddingTo, setPlayerAddingTo, users, setUsers }) {
         const playerIndex = users.findIndex(user => user.id === playerId);
         const newUsers = users
         newUsers[playerIndex].characters.push(data)
-        console.log(newUsers)
+        // console.log(newUsers)
         setUsers(newUsers)
         navigate("/")
     }
