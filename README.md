@@ -3,7 +3,7 @@
 
 The project contained in this and its sister repository were created to demonstrate knowledge of the Sinatra API backend that uses Active Record to access and persist data in the database that is found in this repo. The sister repository is a separate entity that uses Sinatra and Active Record to provide a database to interact with.
 
-This app was developed to allow a user to manage their characters. This includes creation, leveling up and deletion.
+This app was developed to allow a user to manage their D&D characters. This includes creation, leveling up and deletion.
 
 
 ## Getting Started
@@ -25,7 +25,7 @@ $ bundle install
 Once finished installing, you will need to make sure there is data seeded into your database. Do this by executing the following in your console:
 
 ```console
-$ bundle exec rake db:seed
+$ bundle exec rake db:migrate db:seed
 ```
 This will reset any data in the database and make sure you have good data to start with.
 
